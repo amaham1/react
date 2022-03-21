@@ -12,6 +12,7 @@ let alertNoraml = true;
 
 function reducer2(state = alertNoraml, action) {
   if (action.type === '닫기') {
+    console.log(action)
     state = false
     return state;
   } else {
@@ -20,22 +21,35 @@ function reducer2(state = alertNoraml, action) {
 }
 
 const normal = [
-  { id: 0, name: '멋진신발', quan : 2},
-  { id: 1, name: '안 멋진신발', quan : 3},
-  { id: 2, name: '좀 멋진신발', quan : 4}
+  { id: 0, name: 'White and Black', quan : 2},
+  { id: 1, name: 'Red Knit', quan : 3},
+  { id: 2, name: 'Grey Yordann', quan : 4}
 ];
 
 function reducer(state = normal, action) {
-  if ( action.type === '수량증가') {
-    let arr = [...state];
-    arr[0].quan += 1;
+  if ( action.type === '항목추가') {
+      let copy = [...state]
+      if (action.payload.name === copy[action.payload.id].name) {
+        copy[action.payload.id].quan += 1;
+      } else {
+        copy.push(action.payload);
+      }
+   
+    return copy
+  }
+  else if ( action.type === '수량증가') {
+      let arr = [...state];
+      let num = action.payload.id; 
+      arr[num].quan += 1;
     return arr;
   } else if ( action.type === '수량감소') {
-    let arr = [...state];
-    arr[0].quan -= 1;
-    if (arr[0].quan < 0) {
-      arr[0].quan = 0;
-    }
+      let arr = [...state];
+      let num = action.payload.id; 
+      
+      arr[num].quan -= 1;
+      if (arr[num].quan < 0) {
+        arr[num].quan = 0;
+      }
     return arr;
   } else {
     return state;

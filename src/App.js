@@ -5,7 +5,7 @@ import { useState, useContext } from 'react';
 import React from 'react';
 import arr from './data.js';
 import Detail from './Detail.js'
-import { Link, Route, Switch} from 'react-router-dom';
+import { Link, Route, Switch, useHistory} from 'react-router-dom';
 import axios from 'axios'
 import Cart from './Cart.js'
 
@@ -98,10 +98,11 @@ function App() {
 
 
 function Goods(props) {
+  const history = useHistory();
 
     return (
-      <div className="col-md-4">
-          <img src={`https://codingapple1.github.io/shop/shoes${props.index+1}.jpg`} width="100%" alt=""/>
+      <div className="col-md-4" onClick={ ()=>{ history.push(`/detail/${props.shoes.id}`) }} >
+          <img src={`https://codingapple1.github.io/shop/shoes${props.shoes.id+1}.jpg`} width="100%" alt=""/>
           <h4> {props.shoes.title}</h4>
           <p> {props.shoes.price} </p>
           <p></p>
