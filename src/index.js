@@ -12,7 +12,7 @@ let alertNoraml = true;
 
 function reducer2(state = alertNoraml, action) {
   if (action.type === '닫기') {
-    console.log(action)
+    
     state = false
     return state;
   } else {
@@ -29,8 +29,11 @@ const normal = [
 function reducer(state = normal, action) {
   if ( action.type === '항목추가') {
       let copy = [...state]
-      if (action.payload.name === copy[action.payload.id].name) {
-        copy[action.payload.id].quan += 1;
+      let found = state.findIndex( (a)=> {
+        return a.id === action.payload.id
+      })
+      if (found >= 0) {
+        copy[found].quan += 1;
       } else {
         copy.push(action.payload);
       }
@@ -45,7 +48,7 @@ function reducer(state = normal, action) {
   } else if ( action.type === '수량감소') {
       let arr = [...state];
       let num = action.payload.id; 
-      
+
       arr[num].quan -= 1;
       if (arr[num].quan < 0) {
         arr[num].quan = 0;
